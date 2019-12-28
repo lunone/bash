@@ -84,9 +84,8 @@ stty erase '^H' && read -e -p "请输入 用户名：" dbUser
 stty erase '^H' && read -e -p "请输入 用户名：" dbPass
 docker run -d --name mysql -p 3306:3306 -v /db:/var/lib/mysql -e MYSQL_DATABASE=${dbName} -e MYSQL_USER=${dbUser} -e MYSQL_PASSWORD=${dbPass} -e MYSQL_ROOT_PASSWORD=${dbRootPass} yobasystems/alpine-mariadb --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
-
-
 echo '安装web ssh软件sshwifty'
+stty erase '^H' && read -e -p "请输入SSH面板访问密码：" sshPass
 # 安装sshwifty
 echo '下载sshwifty'
 cd ~
@@ -100,7 +99,7 @@ echo '建立/root/.config文件夹'
 mkdir /root/.config
 echo '{
   "HostName": "",
-  "SharedKey": "pigdoor9meat",
+  "SharedKey": "${sshPass}",
   "DialTimeout": 5,
   "Socks5": "",
   "Socks5User": "",
