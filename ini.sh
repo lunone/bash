@@ -7,11 +7,19 @@ yum -y install wget unzip e2fsprogs vixie-cron crontabs >/dev/null 2>&1
 #vixie-cron软件包是cron的主程序；crontabs软件包是用来安装、卸装、或列举用来驱动 cron 守护进程的表格的程序
 
 mkdir -p /www/.config
+mkdir -p /www/.log
 echo '提前确保域名要被解析,请输入域名，不带http(s)://部分'
 stty erase '^H' && read -e -p "请输入：" domain
 echo "${domain} {
 	gzip
 	root /www/site/${domain}
+	internal /app
+	log /www/.log/${domain}.log {
+	    rotate_size 30
+	    rotate_age  30
+	    rotate_keep 10
+	    rotate_compress
+	}
 	fastcgi / 127.0.0.1:9000 php # php variant only
 }" > /www/.config/Caddyfile
 
@@ -93,13 +101,13 @@ phpinfo();' > /www/site/${domain}/index.php
 
 echo '安装可道云'
 mkdir -p /www/site/${domain}/dir
-cd /www/site/${domain}/dir
-wget http://static.kodcloud.com/update/download/kodexplorer4.40.zip
-unzip kodexplorer4.40.zip
+curl -o /www/site/${domain}/dir/kod.zip http://static.kodcloud.com/update/download/kodexplorer4.40.zip
+unzip -o /www/site/${domain}/dir/kod.zip -d /www/site/${domain}/dir
+rm -f /www/site/${domain}/dir/kod.zip
 
 # 因为php默认是以apache用户执行的，所以把www/site文件夹给apache，并755
-chmod -Rf 777 /www/site/${domain}/dir
 chown -Rf apache:apache /www/site
+chmod -Rf 755 /www/site/${domain}/dir
 
 echo '添加caddy和php的守护进程'
 # 添加cron文件夹
