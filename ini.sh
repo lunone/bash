@@ -138,15 +138,10 @@ echo '*/10 * * * * /root/.cron/guardian.sh > /dev/null 2>&1 &' >> /etc/crontab
 
 echo '开始安装python3.6'
 # python 
-yum install epel-release -y
-
-yum -y install sqlite  sqlite-devel
-
+yum -y install epel-release sqlite  sqlite-devel
 sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
-
-yum install python36  python36u-pip  -y
+yum -y install python36  python36u-pip
 python3.6  -m  pip install --upgrade pip
-
 mv   /usr/bin/python  /tmp/
 ln -s /usr/bin/python3.6    /usr/bin/python
 
