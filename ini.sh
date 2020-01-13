@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo '更新系统...'
+echo '更新系统中，时间稍长请勿中断...'
 yum -y update >/dev/null 2>&1
 echo '安装wget unzip e2fsprogs ……'
 yum -y install wget unzip e2fsprogs vixie-cron crontabs >/dev/null 2>&1
@@ -102,7 +102,7 @@ phpinfo();' > /www/site/${domain}/index.php
 echo '安装可道云'
 mkdir -p /www/site/${domain}/dir
 curl -o /www/site/${domain}/dir/kod.zip http://static.kodcloud.com/update/download/kodexplorer4.40.zip
-unzip -o /www/site/${domain}/dir/kod.zip -d /www/site/${domain}/dir
+unzip -o /www/site/${domain}/dir/kod.zip -d /www/site/${domain}/dir >/dev/null 2>&1
 rm -f /www/site/${domain}/dir/kod.zip
 
 # 因为php默认是以apache用户执行的，所以把www/site文件夹给apache，并755
