@@ -10,7 +10,7 @@ mkdir -p /www/.config
 mkdir -p /www/.log
 echo '提前确保域名要被解析,请输入域名，不带http(s)://部分'
 stty erase '^H' && read -e -p "请输入：" domain
-echo "${domain} {
+echo ":80 {
 	gzip
 	root /www/site/${domain}
 	internal /app
