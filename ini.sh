@@ -25,7 +25,7 @@ echo ":80 {
 
 echo '安装caddy'
 #caddy官方脚本
-curl https://getcaddy.com | bash -s personal
+curl https://getcaddy.com | bash -s personal http.git,tls.dns.cloudflare
 echo '[Unit]
 Description=Caddy server
 After=network.target
